@@ -1,0 +1,14 @@
+<section>
+  <md-card class="login-card">
+    <md-card-title>Login</md-card-title>
+    <md-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm)" autocomplete="on">
+        <md-input formControlName="email" placeholder="E-mail"></md-input><br>
+        <md-input formControlName="password" type="password" placeholder="Senha"></md-input><br>
+        <button md-raised-button color="primary" [disabled]="!loginForm.valid">LOGIN</button>
+        <button md-raised-button color="accent" type="button" [routerLink]="['','register']">REGISTER</button>
+      </form>
+    </md-card-content>
+  </md-card>
+  <br><br>
+</section>

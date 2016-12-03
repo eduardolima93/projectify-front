@@ -1,22 +1,14 @@
 export const views: Object[] = [
   {
-    name: 'Dashboard',
-    icon: 'home',
-    link: ['']
+    id: 'projectList',
+    name: 'PROJETOS',
+    icon: 'flag',
+    link: ['projects']
   },
   {
-    name: 'Lazy',
-    icon: 'file_download',
-    link: ['lazy']
+    id: 'userList',
+    name: 'MEMBROS',
+    icon: 'user',
+    link: ['users']
   },
-    {
-    name: 'Sync',
-    icon: 'done',
-    link: ['sync']
-  },
-  {
-    name: 'Bad Link',
-    icon: 'error',
-    link: ['wronglink']
-  }
 ];

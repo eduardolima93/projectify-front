@@ -1,0 +1,16 @@
+<section>
+  <md-card class="project-card">
+    <img md-card-image src="http://www.greenclick.com.br/wp-content/uploads/2014/10/plantararvore_greenclick.jpg">
+    <md-card-content>
+      <form *ngIf="isProjectsLoaded" [formGroup]="projectForm" (ngSubmit)="submitForm(projectForm)" autocomplete="off">
+        <md-input formControlName="name" placeholder="Nome do projeto" [disabled]="!isEditMode"></md-input><br>
+        <md-input formControlName="idea" placeholder="Ideia" [disabled]="!isEditMode"></md-input><br>
+        <md-input formControlName="motivation" placeholder="Motivação" [disabled]="!isEditMode"></md-input><br>
+        <md-textarea formControlName="description" placeholder="Descrição do projeto" [disabled]="!isEditMode"></md-textarea><br>
+        <button md-raised-button color="primary" (click)="editForm()" *ngIf="!isEditMode">Editar</button>
+        <button md-raised-button color="primary" *ngIf="isEditMode">Save</button>
+      </form>
+    </md-card-content>
+  </md-card>
+  <br><br>
+</section>

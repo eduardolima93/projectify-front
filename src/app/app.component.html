@@ -1,5 +1,5 @@
 <md-sidenav-layout fullscreen>
-  <md-sidenav [opened]="!mobile" #sidenav [mode]="sideNavMode">
+  <md-sidenav [opened]="false" #sidenav [mode]="sideNavMode">
     <md-nav-list>
       <template ngFor let-view [ngForOf]="views" let-even="even" let-odd="odd" let-rowIndex="index">
         <a md-list-item [routerLink]="view.link" routerLinkActive="active-link" (click)="mobile ? sidenav.close() : {}">
@@ -10,13 +10,17 @@
       </template>
     </md-nav-list>
   </md-sidenav>
-  <md-toolbar color="primary">
-    <button md-icon-button (click)="sidenav.toggle()">
+  <md-toolbar color="primary" class="toolbar">
+    <button md-icon-button (click)="sidenav.toggle()" *ngIf="mobile">
       <md-icon>menu</md-icon>
-    </button> Angular Starter App
+    </button> <span class="toolbar-title">PROJECTIFY</span>
+    <a md-button *ngFor="let view of views" [routerLink]="view.link" routerLinkActive="active-link">{{view.name}}</a>
+    <span class="spacer"></span>
+    <a md-button routerLink="login" *ngIf="!isLoggedIn">LOGIN</a>
+    <a md-button routerLink="user" *ngIf="isLoggedIn">{{userFirstName}}</a>
   </md-toolbar>
-<md-card id="my-page-card">
-  <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
-</md-card>
+  <main id="my-page-card">
+    <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+  </main>
 </md-sidenav-layout>
 <my-store-devtools *ngIf="showMonitor"></my-store-devtools>

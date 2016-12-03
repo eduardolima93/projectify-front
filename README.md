@@ -1,4 +1,8 @@
-# Complete starter seed project for Angular 2
+# Projectify
+
+Uses:
+
+## Complete starter seed project for Angular 2
 
 ## Material Branch with Universal (Server-side rendering) support
 

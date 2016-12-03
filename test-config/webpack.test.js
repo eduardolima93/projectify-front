@@ -117,7 +117,6 @@ module.exports = {
        * See: https://github.com/webpack/raw-loader
        */
       { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'], exclude: [root('src/index.html')] },
-
       /**
        * Raw loader support for *.html
        * Returns file content as string

@@ -1,0 +1,18 @@
+md-input,
+md-textarea {
+    width: 100%;
+}
+
+md-textarea {
+    resize: vertical
+}
+
+.project-card {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 50px;
+    img {
+        display: block;
+        height: 250px;
+    }
+}
