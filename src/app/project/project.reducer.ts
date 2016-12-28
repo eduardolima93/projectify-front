@@ -21,16 +21,8 @@ export function projectReducer(state = initialState, action: Action): ProjectSta
 
     case ProjectActions.SAVE_PROJECT_SUCCESS: {
       const project = action.payload.project;
-      const indexOfProjectInProject = state.projects
-        .findIndex(p => p._id === project._id);
-      if (indexOfProjectInProject !== -1) {
-        const nextProjects = [...state.projects];
-        nextProjects[indexOfProjectInProject] = project;
-        return Object.assign({}, state,
-          { projects: nextProjects });
-      }
-      return Object.assign({}, state,
-        { projects: [project, ...state.projects] });
+      return saveOrUpdateProjectInState(state, project);
+
     }
 
     case ProjectActions.GET_PROJECTS_SUCCESS: {
@@ -41,8 +33,27 @@ export function projectReducer(state = initialState, action: Action): ProjectSta
       });
     }
 
+    case ProjectActions.JOIN_PROJECT_SUCCESS: {
+      const project = action.payload.project;
+      return saveOrUpdateProjectInState(state, project);
+    }
+
     default: {
       return state;
     }
   }
 }
+
+
+function saveOrUpdateProjectInState(state: ProjectState, project: Project): ProjectState {
+  const indexOfProjectInProject = state.projects
+    .findIndex(p => p._id === project._id);
+  if (indexOfProjectInProject !== -1) {
+    const nextProjects = [...state.projects];
+    nextProjects[indexOfProjectInProject] = project;
+    return Object.assign({}, state,
+      { projects: nextProjects });
+  }
+  return Object.assign({}, state,
+    { projects: [project, ...state.projects] });
+};

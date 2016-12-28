@@ -1,0 +1,55 @@
+<section>
+  <md-card class="project-card">
+    <img class="img-banner" md-card-image src="http://www.greenclick.com.br/wp-content/uploads/2014/10/plantararvore_greenclick.jpg">
+    <md-card-content>
+      <form (keydown.enter)="$event.target.id !== 'googlePlacesAutocompleteInput'" [formGroup]="projectForm" class="project-form"
+        (ngSubmit)="submitForm(projectForm)" autocomplete="off">
+        <div>
+          <md-input formControlName="name" placeholder="Nome do projeto*"></md-input>
+          <md-hint *ngIf="!projectForm.controls.name.valid && triedToSubmit" class="validation-message" align="end">
+            Nome do projeto com pelo menos 5 caracteres
+          </md-hint>
+        </div>
+        <div>
+          <md-input formControlName="objective" placeholder="Objetivo do projeto*"></md-input>
+          <md-hint *ngIf="!projectForm.controls.objective.valid && triedToSubmit" class="validation-message" align="end">
+            Objetivo do projeto com pelo menos 5 caracteres
+          </md-hint>
+        </div>
+        <div>
+          <md-textarea (keydown)="textareaKeyDown($event)" formControlName="description" placeholder="Descrição do projeto*"></md-textarea>
+          <md-hint align="end" [class.validation-message]="!projectForm.controls.description.valid && (triedToSubmit || !projectForm.controls.description.pristine)">
+            {{projectForm.value.description.length}} / 800
+          </md-hint>
+        </div>
+        <div>
+          <md-textarea (keydown)="textareaKeyDown($event)" formControlName="activity" placeholder="Atividades a serem desenvolvidas"></md-textarea>
+          <md-hint align="end">{{projectForm.value.activity.length}} / 300</md-hint>
+        </div>
+        <div>
+          <md-textarea (keydown)="textareaKeyDown($event)" formControlName="needing" placeholder="Recursos ou hablidades sendo requisitados"></md-textarea>
+          <md-hint align="end">{{projectForm.value.needing.length}} / 300</md-hint>
+        </div>
+        <div>
+          <md-input type="email" formControlName="contactEmail" placeholder="Email de contato*"></md-input>
+          <md-hint *ngIf="!projectForm.controls.contactEmail.valid && triedToSubmit" class="validation-message" align="end">
+            Email de contato necessário
+          </md-hint>
+        </div>
+        <md-input type="tel" formControlName="contactNumber1" placeholder="Telefone de contato"></md-input><br>
+        <md-input type="tel" formControlName="contactNumber2" placeholder="Telefone de contato"></md-input><br>
+        <md-input type="url" formControlName="website" placeholder="Website"></md-input><br>
+        <md-input type="url" formControlName="facebookPage" placeholder="Página do Facebook"></md-input><br>
+        <md-input type="search" id="googlePlacesAutocomplete" placeholder="Endereço"></md-input><br>
+        <sebm-google-map [zoom]="16" [latitude]="project.address.latitude || defaultLatitude" [longitude]="project.address.longitude || defaultLongitude">
+          <sebm-google-map-marker [latitude]="project.address.latitude" [longitude]="project.address.longitude">
+          </sebm-google-map-marker>
+        </sebm-google-map>
+        <br>
+        <button md-raised-button color="primary">SALVAR</button>
+      </form>
+      <br>
+    </md-card-content>
+  </md-card>
+  <br><br>
+</section>

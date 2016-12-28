@@ -56,7 +56,7 @@ export class ProjectActions {
   getProject(projectId): Action {
     return {
       type: ProjectActions.GET_PROJECT,
-      payload: projectId
+      payload: { projectId }
     };
   }
   static GET_PROJECT_FAIL = '[Project] Get Project Fail';
@@ -70,6 +70,29 @@ export class ProjectActions {
   getProjectSuccess(res: Response): Action {
     return {
       type: ProjectActions.GET_PROJECT_SUCCESS,
+      payload: res
+    };
+  }
+
+
+  static JOIN_PROJECT = '[Project] Join Project';
+  joinProject(projectId: number): Action {
+    return {
+      type: ProjectActions.JOIN_PROJECT,
+      payload: { projectId },
+    };
+  }
+  static JOIN_PROJECT_FAIL = '[Project] Join Project Fail';
+  joinProjectFail(err: Error): Action {
+    return {
+      type: ProjectActions.JOIN_PROJECT_FAIL,
+      payload: err
+    };
+  }
+  static JOIN_PROJECT_SUCCESS = '[Project] Join Project Success';
+  joinProjectSuccess(res: Response): Action {
+    return {
+      type: ProjectActions.JOIN_PROJECT_SUCCESS,
       payload: res
     };
   }

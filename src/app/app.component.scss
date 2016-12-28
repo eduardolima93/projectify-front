@@ -14,11 +14,12 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    overflow-y: scroll;
-    padding: 0 30px;
+    padding: 0px;
+    overflow: auto;
 }
 
 .toolbar {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.24);
     .toolbar-title {
         margin-right: 50px;
     }

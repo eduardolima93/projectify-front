@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
@@ -21,15 +22,17 @@ export class UserComponent implements OnDestroy, OnInit {
   user: User = {};
   userState$: Observable<UserState>;
   isEditMode = false;
+  canEdit = false;
 
   constructor(fb: FormBuilder,
     private store: Store<AppState>,
     private userActions: UserActions,
     private authService: AuthService,
+    private route: ActivatedRoute,
   ) {
     this.userForm = fb.group({
-      name: [this.user.name, Validators.required],
-      email: [this.user.name, Validators.required],
+      name: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required],
       about: this.user.about,
@@ -38,9 +41,20 @@ export class UserComponent implements OnDestroy, OnInit {
     this.userState$ = this.store.select(state => state.user);
     this.userState$.takeUntil(this.destroyed$)
       .subscribe(userState => {
-        this.isEditMode = userState.isEditingUser;
-        this.user = userState.user;
-        this.userForm.patchValue(this.user);
+        this.route.params.select(params => params['id'])
+          .takeUntil(this.destroyed$)
+          .subscribe(paramsUserId => {
+            if (paramsUserId && paramsUserId !== userState.user._id) {
+              this.user = userState.users.find(u => u._id === paramsUserId);
+            } else {
+              this.canEdit = true;
+              this.isEditMode = userState.isEditingUser;
+              this.user = userState.user;
+            }
+            if (this.user) {
+              this.userForm.patchValue(this.user);
+            }
+          });
       });
   }
 

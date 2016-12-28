@@ -1,6 +1,6 @@
 <header>
   <h5>
-    Suas Informações
+     
   </h5>
 </header>
 <section>
@@ -11,9 +11,9 @@
         <md-input formControlName="email" placeholder="E-mail" [disabled]="!isEditMode"></md-input><br>
         <md-textarea formControlName="about" placeholder="Sobre você" [disabled]="!isEditMode"></md-textarea><br>
         <md-input formControlName="skills" placeholder="Habilidades" [disabled]="!isEditMode"></md-input><br>
-        <button md-raised-button color="primary" *ngIf="isEditMode">ENVIAR</button>
-        <button md-raised-button color="primary" (click)="editForm()" *ngIf="!isEditMode">EDITAR</button>
-        <button md-button *ngIf="!isEditMode" (click)="logout()">LOGOUT</button>
+        <button md-raised-button color="primary" *ngIf="isEditMode">SALVAR</button>
+        <button md-button color="primary" (click)="editForm()" *ngIf="!isEditMode && canEdit">EDITAR</button>
+        <button md-button *ngIf="!isEditMode && canEdit" (click)="logout()">LOGOUT</button>
       </form>
     </md-card-content>
   </md-card>

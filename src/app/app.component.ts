@@ -22,7 +22,8 @@ export class AppComponent {
   isLoggedIn = false;
   sideNavMode = MOBILE ? 'over' : 'side';
   views = views;
-  userFirstName = '';
+  userFirstName: string = '';
+  userId: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -43,6 +44,7 @@ export class AppComponent {
           this.store.dispatch(this.userActions.getCurrentUser());
         } else {
           this.userFirstName = userState.user.name.split(' ')[0];
+          this.userId = userState.user._id;
         }
       });
   }

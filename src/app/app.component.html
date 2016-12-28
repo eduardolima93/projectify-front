@@ -16,11 +16,11 @@
     </button> <span class="toolbar-title">PROJECTIFY</span>
     <a md-button *ngFor="let view of views" [routerLink]="view.link" routerLinkActive="active-link">{{view.name}}</a>
     <span class="spacer"></span>
-    <a md-button routerLink="login" *ngIf="!isLoggedIn">LOGIN</a>
-    <a md-button routerLink="user" *ngIf="isLoggedIn">{{userFirstName}}</a>
+    <a md-button routerLink="login" *ngIf="!isLoggedIn || !userFirstName">LOGIN</a>
+    <a md-button [routerLink]="['','user',userId]" *ngIf="isLoggedIn">{{userFirstName}}</a>
   </md-toolbar>
   <main id="my-page-card">
     <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
   </main>
 </md-sidenav-layout>
-<my-store-devtools *ngIf="showMonitor"></my-store-devtools>
+<!--<my-store-devtools *ngIf="showMonitor"></my-store-devtools>-->

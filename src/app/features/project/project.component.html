@@ -1,16 +1,29 @@
 <section>
   <md-card class="project-card">
-    <img md-card-image src="http://www.greenclick.com.br/wp-content/uploads/2014/10/plantararvore_greenclick.jpg">
+    <img class="img-banner" md-card-image src="http://www.greenclick.com.br/wp-content/uploads/2014/10/plantararvore_greenclick.jpg">
     <md-card-content>
-      <form *ngIf="isProjectsLoaded" [formGroup]="projectForm" (ngSubmit)="submitForm(projectForm)" autocomplete="off">
+      <form *ngIf="isProjectLoaded" [formGroup]="projectForm" (ngSubmit)="submitForm(projectForm)" autocomplete="off">
         <md-input formControlName="name" placeholder="Nome do projeto" [disabled]="!isEditMode"></md-input><br>
         <md-input formControlName="idea" placeholder="Ideia" [disabled]="!isEditMode"></md-input><br>
         <md-input formControlName="motivation" placeholder="Motivação" [disabled]="!isEditMode"></md-input><br>
         <md-textarea formControlName="description" placeholder="Descrição do projeto" [disabled]="!isEditMode"></md-textarea><br>
-        <button md-raised-button color="primary" (click)="editForm()" *ngIf="!isEditMode">Editar</button>
-        <button md-raised-button color="primary" *ngIf="isEditMode">Save</button>
+        <button md-button (click)="editForm()" *ngIf="!isEditMode">EDITAR</button>
+        <button md-raised-button color="primary" *ngIf="isEditMode">SALVAR</button>
       </form>
+      <br>
+      <md-list class="user-list">
+        <md-list-item *ngFor="let user of participants">
+          <img md-list-avatar src="https://scontent.fsdu5-1.fna.fbcdn.net/v/t1.0-1/p160x160/11880410_921768374546209_2147211908279740228_n.jpg?oh=49877b1ac2a40901d369b37ed468e51f&oe=58CB3E1B"
+            alt="https://scontent.fsdu5-1.fna.fbcdn.net/v/t1.0-1/p160x160/11880410_921768374546209_2147211908279740228_n.jpg?oh=49877b1ac2a40901d369b37ed468e51f&oe=58CB3E1B">
+          <a md-line md-button class="user-name" [routerLink]="['','user',user._id]">{{user.name}}</a>
+          <p md-line>
+            <span> {{user.skills}} </span>
+          </p>
+        </md-list-item>
+      </md-list>
     </md-card-content>
   </md-card>
+
+
   <br><br>
 </section>

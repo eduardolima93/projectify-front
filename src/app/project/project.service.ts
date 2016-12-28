@@ -26,4 +26,9 @@ export class ProjectService extends RequestBase {
     return this.http.post(`${API_BASE_URL}/project`, { project }, this.options)
       .map(res => res.json());
   }
+
+  joinProject(projectId: number): Observable<Project> {
+    return this.http.post(`${API_BASE_URL}/project/joinProject`, { projectId }, this.options)
+      .map(res => res.json());
+  }
 }

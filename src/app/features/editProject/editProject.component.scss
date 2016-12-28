@@ -15,6 +15,17 @@ md-textarea {
         display: block;
         height: 250px;
     }
+    .project-form {
+        >div {
+            position: relative;
+        }
+        .validation-message {
+            color: red;
+        }
+    }
+    .sebm-google-map-container {
+        height: 300px;
+    }
 }
 
 .user-list {

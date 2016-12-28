@@ -63,7 +63,7 @@ Use `yarn run start:hmr` to run dev server in HMR mode.
 
 Use `yarn run build` for production build.
 
-Use `yarn run server:prod` for production server and production watch. Default production port is `8088`.
+Use `yarn run server:prod` for production server and production watch. Default production port is `8080`.
 
 Use `yarn run universal` to run production build in Universal. To run and build universal in AOT mode, use
 `yarn run universal:aot`. Default universal port is `8000`.

@@ -1,21 +1,31 @@
-<header>
-  <h5>
-    Projects
-  </h5>
-</header>
-<section>
+<div class="list-container">
   <button md-raised-button color="primary" [routerLink]="['','project','0']">NOVO PROJETO</button>
-  <md-card *ngFor="let project of projects" class="project-card">
-    <md-card-subtitle>{{project.motivation}}</md-card-subtitle>
-    <md-card-title>{{project.name}}</md-card-title>
+  <md-card *ngFor="let project of projects" class="project-card" 
+  (mouseover)="projectMouseOver(project)" (mouseleave)="projectMouseLeave(project)">
     <img md-card-image src="http://photos.projects-abroad.org/projects/building/building-projects-abroad.jpg">
+    <md-card-title>{{project.name}}</md-card-title>
+    <md-card-subtitle>{{project.description}}</md-card-subtitle>
     <md-card-content>
-      <p>{{project.idea}}</p>
-      <p>{{project.description}}</p>
+      <p>(21) 98585-9989</p>
+      <p>Colaboradores: 2</p>
     </md-card-content>
     <md-card-actions>
-      <button md-button [routerLink]="['','project',project._id]">VIEW</button>
-      <button md-button>JOIN</button>
+      <button md-button [routerLink]="['','project',project._id]">ABRIR</button>
+      <button md-button (click)="joinProject(project._id)">JUNTAR-SE</button>
     </md-card-actions>
   </md-card>
-</section>
+</div>
+<div class="map-container">
+  <sebm-google-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (zoomChange)="zoomChange($event)" (centerChange)="centerChange($event)">
+    <sebm-google-map-marker *ngFor="let project of projects" [title]="project.name" [label]="project.name[0].toUpperCase()" [latitude]="project.latitude"
+      [longitude]="project.longitude" [iconUrl]="project.iconUrl || 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi-dotless.png'"
+      (markerClick)="markerClick(project)">
+
+      <sebm-google-map-info-window [isOpen]="project.isOpen">
+        <h5>{{project.name}}</h5>
+        <p>{{project.description}}</p>
+      </sebm-google-map-info-window>
+
+    </sebm-google-map-marker>
+  </sebm-google-map>
+</div>

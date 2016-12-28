@@ -7,7 +7,7 @@ export const views: Object[] = [
   },
   {
     id: 'userList',
-    name: 'MEMBROS',
+    name: 'COLABORADORES',
     icon: 'user',
     link: ['users']
   },

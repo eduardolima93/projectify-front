@@ -2,9 +2,12 @@
   <h5>
     Membros
   </h5>
+  <md-icon>search</md-icon>
+  <md-input [formControl]="filterControl" placeholder="Pesquise por habilidade ou nome"></md-input><br>
+
 </header>
 <section>
-  <md-card *ngFor="let user of users" class="user-card">
+  <md-card *ngFor="let user of users | userFilter:filterText" class="user-card">
     <md-card-header>
       <img md-card-avatar src="https://scontent.fsdu5-1.fna.fbcdn.net/v/t1.0-1/p160x160/11880410_921768374546209_2147211908279740228_n.jpg?oh=49877b1ac2a40901d369b37ed468e51f&oe=58CB3E1B">
       <md-card-title>{{user.name}}</md-card-title>
@@ -12,7 +15,7 @@
     </md-card-header>
     <md-card-content>
       <p>{{user.skills}}</p>
-      <button md-button>CONTATAR</button>
+      <button md-button [routerLink]="['','user',user._id]">CONTATAR</button>
     </md-card-content>
   </md-card>
 </section>

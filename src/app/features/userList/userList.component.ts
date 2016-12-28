@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
@@ -20,6 +20,8 @@ export class UserListComponent implements OnDestroy, OnInit {
   userForm: FormGroup;
   users: User[] = [];
   users$: Observable<User[]>;
+  filterText: string = '';
+  filterControl = new FormControl();
 
   constructor(fb: FormBuilder,
     private store: Store<AppState>,
@@ -31,6 +33,9 @@ export class UserListComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
+    this.filterControl.valueChanges.subscribe(value => {
+      this.filterText = value;
+    });
   }
 
   ngOnDestroy() {

@@ -1,4 +1,21 @@
-.project-card {
-    margin: 20px auto;
-    max-width: 500px;
+.list-container {
+    width: 60%;
+    float: left;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .project-card {
+        margin: 20px auto;
+        max-width: 500px;
+    }
+}
+
+.map-container {
+    width: 40%;
+    float: right;
+    overflow: hidden;
+    height: 100%;
+    .sebm-google-map-container {
+        height: calc(100vh - 64px);
+    }
 }

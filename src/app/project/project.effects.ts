@@ -47,10 +47,20 @@ export class ProjectEffects {
   @Effect() getProject$ = this.actions$
     .ofType(ProjectActions.GET_PROJECT)
     .switchMap(({payload}) => {
-      return this.projectService.getProject(payload)
+      return this.projectService.getProject(payload.projectId)
         .mergeMap((res: any) => Observable.of(
           this.projectActions.getProjectSuccess(res)))
         .catch((err) => Observable.of(
           this.projectActions.getProjectFail(err)));
+    });
+
+  @Effect() joinProject$ = this.actions$
+    .ofType(ProjectActions.JOIN_PROJECT)
+    .switchMap(({payload}) => {
+      return this.projectService.joinProject(payload.projectId)
+        .mergeMap((res: any) => Observable.of(
+          this.projectActions.joinProjectSuccess(res)))
+        .catch((err) => Observable.of(
+          this.projectActions.joinProjectFail(err)));
     });
 }

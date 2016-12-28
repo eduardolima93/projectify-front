@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { AppState } from '../../reducers';
 import { Store } from '@ngrx/store';
-import { ProjectActions } from '../../project/project.actions';
-import { Project, ProjectState, getNewProject } from '../../project';
+import { ProjectActions, Project, ProjectState, getNewProject } from '../../project';
+import { UserState, User } from '../../user';
 
 @Component({
   selector: 'my-project',
@@ -20,10 +20,13 @@ import { Project, ProjectState, getNewProject } from '../../project';
 export class ProjectComponent implements OnDestroy, OnInit {
   destroyed$: Subject<any> = new Subject<any>();
   projectForm: FormGroup;
-  project: Project = {};
+  project: Project;
   projectState$: Observable<ProjectState>;
-  isProjectsLoaded = false;
+  users: User[] = [];
+  participants: User[] = [];
+  isProjectLoaded = false;
   isEditMode = false;
+  bannedWords = ['drogas', 'armas', 'tráfico', 'briga'];
 
   constructor(private formBuilder: FormBuilder,
     private store: Store<AppState>,
@@ -31,6 +34,12 @@ export class ProjectComponent implements OnDestroy, OnInit {
     private route: ActivatedRoute,
     private router: Router) {
     this.projectState$ = this.store.select(state => state.project);
+    this.store.select(state => state.user.users)
+      .takeUntil(this.destroyed$)
+      .subscribe(users => {
+        this.users = users;
+        this.setParticipants();
+      });
   }
   areEqual(group: FormGroup) {
     const areEqual = group.get('password').value ===
@@ -43,34 +52,51 @@ export class ProjectComponent implements OnDestroy, OnInit {
       .subscribe((params: Params) => {
         this.projectState$.takeUntil(this.destroyed$)
           .subscribe(projectState => {
-            if (!projectState.isProjectsLoaded) {
+            if (!projectState.isProjectsLoaded || this.isProjectLoaded) {
               return;
             }
 
-            this.project = projectState.projects.find(p => p._id === params['id']);
+            let project = projectState.projects.find(p => p._id === params['id']);
 
-            if (!this.project) {
-              this.project = getNewProject();
+            if (!project) {
+              project = getNewProject();
               this.isEditMode = true;
             } else {
               this.isEditMode = false;
             }
 
             this.projectForm = this.formBuilder.group({
-              name: [this.project.name, Validators.required],
-              idea: [this.project.idea, Validators.required],
-              motivation: [this.project.motivation, Validators.required],
-              description: [this.project.description, Validators.required],
+              name: [project.name, Validators.required],
+              idea: ['', Validators.required],
+              motivation: ['', Validators.required],
+              description: [project.description, Validators.required],
             });
-            this.isProjectsLoaded = true;
+            this.isProjectLoaded = true;
+
+
+            this.project = Object.assign({}, project);
+            this.setParticipants();
           });
       });
   }
 
+  setParticipants() {
+    if (!this.project) {
+      return;
+    }
+    this.participants = this.users
+      .filter(u => this.project.participantIds.indexOf(u._id) !== -1);
+  }
+
   saveProject() {
-    this.store.dispatch(this.projectActions.saveProject(
-      Object.assign({}, this.project, this.projectForm.getRawValue()
-      )));
+    let projectToSave = Object.assign({}, this.project, this.projectForm.getRawValue());
+    if (this.hasBannedWords(projectToSave)) {
+      alert('Conteúdo suspeito.');
+      return;
+    }
+
+
+    this.store.dispatch(this.projectActions.saveProject(projectToSave));
     this.isEditMode = false;
   }
 
@@ -87,5 +113,13 @@ export class ProjectComponent implements OnDestroy, OnInit {
 
   ngOnDestroy() {
     this.destroyed$.next();
+  }
+
+  private hasBannedWords(project: Project): boolean {
+    if ((new RegExp('\\b' + this.bannedWords.join('\\b|\\b') + '\\b'))
+      .test(project.description.toLowerCase())) {
+      return true;
+    }
+    return false;
   }
 }
